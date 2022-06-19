@@ -14,7 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "https://simple-commerce-sample.herokuapp.com/", maxAge = 3600)
+@CrossOrigin(origins = "https://simple-commerce-sample.herokuapp.com", maxAge = 3600)
 //@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping(path = "/user")
