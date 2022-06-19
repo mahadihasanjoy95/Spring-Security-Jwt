@@ -1,11 +1,14 @@
 package com.security.SpringSecurityDemo.service.serviceImpl;
 
+import com.security.SpringSecurityDemo.dto.SignUpResponse;
 import com.security.SpringSecurityDemo.persistence.entity.User;
 import com.security.SpringSecurityDemo.persistence.repository.UserRepository;
 import com.security.SpringSecurityDemo.service.contract.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,7 +20,7 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
 
     @Override
-    public String userSignUp(String firstName, String lastName, String password, String email, String roles) {
+    public SignUpResponse userSignUp(String firstName, String lastName, String password, String email, String roles) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -25,8 +28,17 @@ public class UserServiceImpl implements UserService {
         user.setEmail(email);
         user.setRoles(roles);
         user.setActive(true);
-        userRepository.save(user);
-        return user.toString();
+        User existingUser = userRepository.findUserByEmail(email);
+        if (Objects.nonNull(existingUser)){
+            return null;
+        }else {
+            userRepository.save(user);
+            SignUpResponse signUpResponse = new SignUpResponse();
+            signUpResponse.setName(user.getFirstName()+" "+user.getLastName());
+            signUpResponse.setEmail(user.getEmail());
+            signUpResponse.setId(user.getId());
+            return signUpResponse;
+        }
     }
 
     @Override
