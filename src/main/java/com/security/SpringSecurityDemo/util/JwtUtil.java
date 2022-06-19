@@ -1,6 +1,7 @@
 package com.security.SpringSecurityDemo.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +15,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private String SECRET_KEY = "Babu1995";
+    private String SECRET_KEY = "Nanu2021@";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -27,7 +28,12 @@ public class JwtUtil {
 
     public <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         final Claims claims = extractAllClaims(token);
-        return claimResolver.apply(claims);
+        try {
+            return claimResolver.apply(claims);
+        }catch (ExpiredJwtException e){
+            return (T) e.getClaims();
+        }
+
     }
 
     private Claims extractAllClaims(String token) {
@@ -52,7 +58,7 @@ public class JwtUtil {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        return (username.equals(userDetails.getUsername()));
     }
 
 }

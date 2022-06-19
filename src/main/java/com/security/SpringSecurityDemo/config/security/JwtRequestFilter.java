@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -34,16 +33,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String userName = null;
         String jwt = null;
 
-        if (authorizationHeader!=null && authorizationHeader.startsWith("Bearer"))
-        {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
             jwt = authorizationHeader.substring(7);
             userName = jwtUtil.extractUsername(jwt);
         }
-        if (userName!=null && SecurityContextHolder.getContext().getAuthentication() == null)
-        {
+        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(userName);
-            if (jwtUtil.validateToken(jwt, userDetails))
-            {
+            if (jwtUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );
@@ -51,7 +47,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
+        try {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 
 }

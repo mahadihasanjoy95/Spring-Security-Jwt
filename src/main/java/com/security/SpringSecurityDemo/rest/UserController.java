@@ -1,7 +1,9 @@
 package com.security.SpringSecurityDemo.rest;
 
+import com.security.SpringSecurityDemo.config.security.model.MyUserDetails;
 import com.security.SpringSecurityDemo.config.security.service.MyUserDetailsService;
 import com.security.SpringSecurityDemo.dto.*;
+import com.security.SpringSecurityDemo.persistence.entity.User;
 import com.security.SpringSecurityDemo.service.contract.UserService;
 import com.security.SpringSecurityDemo.util.JwtUtil;
 import org.json.JSONObject;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,7 +69,8 @@ public class UserController {
 
     @RequestMapping(path = "/admin")
     public String admin() {
-        return "<h1>Welcome Admin</h1>";
+        MyUserDetails user = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return "<h1>Welcome "+user.getUsername()+"</h1>";
     }
 
     @RequestMapping(path = "/user")
