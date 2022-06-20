@@ -23,7 +23,7 @@ import java.util.Objects;
 import static org.springframework.http.HttpStatus.*;
 
 @CrossOrigin(origins = "https://simple-commerce-sample.herokuapp.com", maxAge = 3600)
-//@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+//@CrossOrigin
 @RestController
 @RequestMapping(path = "/user")
 public class UserController {
