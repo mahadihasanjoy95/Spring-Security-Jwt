@@ -13,8 +13,8 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
-@CrossOrigin(origins = "https://simple-commerce-sample.herokuapp.com", maxAge = 3600)
-//@CrossOrigin
+//@CrossOrigin(origins = "https://simple-commerce-sample.herokuapp.com", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/procuct")
 public class ProductCOntroller {
