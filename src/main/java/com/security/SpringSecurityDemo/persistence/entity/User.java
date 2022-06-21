@@ -30,6 +30,6 @@ public class User {
     @Column(name = "roles")
     private String roles;
 
-    @Column (name ="active")
+    @Column(name = "active")
     private boolean active;
 }

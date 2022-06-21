@@ -29,12 +29,12 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
         user.setActive(true);
         User existingUser = userRepository.findUserByEmail(email);
-        if (Objects.nonNull(existingUser)){
+        if (Objects.nonNull(existingUser)) {
             return null;
-        }else {
+        } else {
             userRepository.save(user);
             SignUpResponse signUpResponse = new SignUpResponse();
-            signUpResponse.setName(user.getFirstName()+" "+user.getLastName());
+            signUpResponse.setName(user.getFirstName() + " " + user.getLastName());
             signUpResponse.setEmail(user.getEmail());
             signUpResponse.setId(user.getId());
             return signUpResponse;
