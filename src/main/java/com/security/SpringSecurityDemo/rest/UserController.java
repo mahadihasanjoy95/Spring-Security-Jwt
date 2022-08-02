@@ -53,8 +53,8 @@ public class UserController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userSignInCommand.getEmail(), userSignInCommand.getPassword())
             );
-        } catch (BadCredentialsException ex) {
-            throw new Exception("Invalid UserName and Password " + ex);
+        } catch (Exception ex) {
+          return  ResponseEntity.badRequest().body("Bad Credentials");
         }
 
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(userSignInCommand.getEmail());

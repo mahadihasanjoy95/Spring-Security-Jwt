@@ -8,6 +8,6 @@ public class WelcomeController {
 
     @RequestMapping(path = "/")
     public String welcome() {
-        return "<h1>Welcome</h1>";
+        return "DashBoard Layout : Response from BackEnd";
     }
 }
