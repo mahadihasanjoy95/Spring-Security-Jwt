@@ -8,7 +8,6 @@ import com.security.SpringSecurityDemo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +19,6 @@ import java.util.Objects;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.OK;
 
-//@CrossOrigin(origins = "https://simple-commerce-sample.herokuapp.com", maxAge = 3600)
 @CrossOrigin
 @RestController
 @RequestMapping(path = "/user")
@@ -54,7 +52,7 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(userSignInCommand.getEmail(), userSignInCommand.getPassword())
             );
         } catch (Exception ex) {
-          return  ResponseEntity.badRequest().body("Bad Credentials");
+            return ResponseEntity.badRequest().body("Bad Credentials");
         }
 
         final UserDetails userDetails = myUserDetailsService.loadUserByUsername(userSignInCommand.getEmail());
