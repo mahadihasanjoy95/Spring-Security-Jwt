@@ -2,6 +2,7 @@ package com.security.SpringSecurityDemo.rest;
 
 import com.security.SpringSecurityDemo.dto.ApiResponse;
 import com.security.SpringSecurityDemo.persistence.entity.Products;
+import com.security.SpringSecurityDemo.persistence.repository.ProductRepository;
 import com.security.SpringSecurityDemo.service.contract.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,12 @@ import static org.springframework.http.HttpStatus.OK;
 //@CrossOrigin(origins = "https://simple-commerce-sample.herokuapp.com", maxAge = 3600)
 @CrossOrigin
 @RestController
-@RequestMapping("/procuct")
+@RequestMapping("/product")
 public class ProductCOntroller {
     @Autowired
     ProductService productService;
+    @Autowired
+    ProductRepository productRepository;
 
     @RequestMapping(path = "/create")
     public ResponseEntity<ApiResponse> createProduct(@Valid @RequestBody Products products) {
@@ -39,6 +42,11 @@ public class ProductCOntroller {
         if (products == null || products.size() == 0) {
             return ResponseEntity.badRequest().body(new ApiResponse(BAD_REQUEST.value(), "Can't fetch Products", products));
         } else return ResponseEntity.ok().body(new ApiResponse(OK.value(), "Product fetch successfully!", products));
+    }
+
+    @RequestMapping(path = "/deleteAll")
+    public void deleteProducts() {
+        productRepository.deleteAll();
     }
 
 }
