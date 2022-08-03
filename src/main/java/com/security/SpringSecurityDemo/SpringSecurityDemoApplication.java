@@ -21,8 +21,8 @@ public class SpringSecurityDemoApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("*")
+				registry.addMapping("https://simple-e-commerce-sample.vercel.app/**")
+						.allowedOrigins("https://simple-e-commerce-sample.vercel.app/")
 						.allowedMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
 			}
 		};
