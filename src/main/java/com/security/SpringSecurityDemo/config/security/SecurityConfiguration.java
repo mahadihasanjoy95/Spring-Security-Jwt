@@ -39,8 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/user").authenticated()
                 .antMatchers("/user/admin").authenticated()
 //                .antMatchers("/procuct/create").authenticated()
-//                .antMatchers("/procuct/getAll").authenticated()
-                .antMatchers("/","/user/signIn","/user/signUp","/product/getAll","/h2-ui","/product/create").permitAll().anyRequest().authenticated()
+                .antMatchers("/procuct/getAll").authenticated()
+                .antMatchers("/","/user/signIn","/user/signUp","/h2-ui","/product/create").permitAll().anyRequest().authenticated()
         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
