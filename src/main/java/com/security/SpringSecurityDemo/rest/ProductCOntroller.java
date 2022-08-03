@@ -17,7 +17,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
-@CrossOrigin(origins = "https://simple-e-commerce-sample.vercel.app/", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/product")
 public class ProductCOntroller {
